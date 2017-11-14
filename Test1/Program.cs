@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CsvHelper;
+using System.IO;
 
 namespace Test1
 {
@@ -15,9 +17,57 @@ namespace Test1
 
             //lab2017_10_17();
             //lab2017_10_30();
-            lab2017_11_13();
+            //lab2017_11_13();
+            //lab2017_11_14();
+            //lab2017_11_14_lista();
+            lab2017_11_14_gielda();
 
             Console.ReadKey();
+        }
+
+        static void lab2017_11_14_gielda()
+        {
+            var csv = new CsvReader(File.OpenText(@"Pliki\11BIT.mst"));
+            csv.Configuration.CultureInfo = new System.Globalization.CultureInfo("en");
+            var _11bit = csv.GetRecords<Notowanie>();
+            foreach (Notowanie not in _11bit)
+            {
+                Console.WriteLine("Spółka: " + not.TICKER + " Data: " + not.DTYYYYMMDD + ", Close: " + not.CLOSE);
+            }
+        }
+
+        static void lab2017_11_14_lista()
+        {
+            ZmienneJakoLista zm = new ZmienneJakoLista();
+            zm.ListaZmiennych.Add(-10);
+            zm.ListaZmiennych.Add(-20);
+            zm.ListaZmiennych.Add(1);
+            zm.ListaZmiennych.Add(-2);
+            Console.WriteLine("Liczby w liście: ");
+            foreach(double elListy in zm.ListaZmiennych)
+                Console.WriteLine(elListy);
+            Console.WriteLine("Suma: " + zm.Suma());
+            Console.WriteLine("Średnia: " + zm.Srednia());
+            Console.WriteLine("Min: " + zm.Min());
+            Console.WriteLine("Max: " + zm.Max());
+
+        }
+        static void lab2017_11_14()
+        {
+            Zmienne zm = new Zmienne();
+            zm.A = -10;
+            zm.B = -20;
+            zm.C = 1;
+            zm.D = -2;
+            Console.WriteLine("A: " + zm.A);
+            Console.WriteLine("B: " + zm.B);
+            Console.WriteLine("C: " + zm.C);
+            Console.WriteLine("D: " + zm.D);
+            Console.WriteLine("Suma: " + zm.Suma());
+            Console.WriteLine("Średnia: " + zm.Srednia());
+            Console.WriteLine("Min: " + zm.Min());
+            Console.WriteLine("Max: " + zm.Max());
+
         }
         static void lab2017_11_13()
         {
