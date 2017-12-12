@@ -27,13 +27,30 @@ namespace Test1
 
         static void lab2017_11_14_gielda()
         {
+            List<Notowanie> listaNotowan = new List<Notowanie>();
             var csv = new CsvReader(File.OpenText(@"Pliki\11BIT.mst"));
             csv.Configuration.CultureInfo = new System.Globalization.CultureInfo("en");
             var _11bit = csv.GetRecords<Notowanie>();
             foreach (Notowanie not in _11bit)
             {
-                Console.WriteLine("Spółka: " + not.TICKER + " Data: " + not.DTYYYYMMDD + ", Close: " + not.CLOSE);
+                Console.WriteLine("Spółka: " + not.TICKER + " Data: " + not.Date.ToString() + ", Close: " + not.CLOSE);
+                listaNotowan.Add(not);
             }
+            Console.WriteLine("Liczba notowań: " + listaNotowan.Count);
+            listaNotowan.AddRange(Notowanie.PobierzNotowanie(@"Pliki\CDPROJEKT.mst"));
+            Console.WriteLine("Liczba notowań: " + listaNotowan.Count);
+            listaNotowan.AddRange(Notowanie.PobierzNotowanie(@"Pliki\CIGAMES.mst"));
+            Console.WriteLine("Liczba notowań: " + listaNotowan.Count);
+
+            Console.WriteLine("Liczba notowań < 10: " + listaNotowan.Count(p => p.CLOSE < 10 && p.TICKER == "CDPROJEKT"));
+
+            Console.WriteLine("Notowania CDPROJEKT z lipca 2017:");
+            var wybraneNotowania = listaNotowan.Where(p=>p.TICKER == "CDPROJEKT" && p.Date.Year == 2017 && p.Date.Month == 7);
+            foreach (Notowanie not in wybraneNotowania)
+            {
+                Console.WriteLine(" Data: " + not.Date.ToString() + ", Close: " + not.CLOSE);
+            }
+            Console.WriteLine("Średnia CDPROJEKT 2017 lipiec: " + wybraneNotowania.Average(p=> p.CLOSE).ToString());
         }
 
         static void lab2017_11_14_lista()
